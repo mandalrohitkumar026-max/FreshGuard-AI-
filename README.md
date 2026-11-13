@@ -399,9 +399,6 @@ Tested across 32 empirical factual scenarios in [`tests/evaluation/aiEvaluation.
 - **Project**: FreshGuard AI
 - **Hackathon**: Global AI Hackathon 2026
 - **Problem Statement**: PS06 – Build a Stale-Answer Detector for AI Applications
-- **Team**: FreshGuard AI Engineering Team
-
----
 
 ## Q. License
 
