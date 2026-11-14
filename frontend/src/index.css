@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-900 tracking-tight font-semibold;
+  }
+}
+
+@layer components {
+  /* Enterprise SaaS Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium px-4 py-2 rounded-lg transition-all shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 active:bg-slate-100 text-slate-700 font-medium px-4 py-2 rounded-lg border border-slate-200 transition-all shadow-subtle hover:border-slate-300 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium px-3 py-1.5 rounded-lg transition-colors focus:outline-none;
+  }
+
+  .btn-teal {
+    @apply inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white font-medium px-4 py-2 rounded-lg transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2;
+  }
+
+  /* Enterprise Cards */
+  .card {
+    @apply bg-white border border-slate-200/90 rounded-xl p-6 shadow-card transition-shadow;
+  }
+
+  .card-hover {
+    @apply hover:shadow-elevated hover:border-slate-300 transition-all;
+  }
+
+  /* Forms & Inputs */
+  .input {
+    @apply bg-white border border-slate-300 text-slate-900 rounded-lg px-3.5 py-2 w-full
+           focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600
+           placeholder-slate-400 text-sm transition-all shadow-subtle;
+  }
+
+  .textarea {
+    @apply bg-white border border-slate-300 text-slate-900 rounded-lg p-3.5 w-full
+           focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600
+           placeholder-slate-400 text-sm transition-all shadow-subtle resize-y;
+  }
+
+  .label {
+    @apply text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5 block;
+  }
+
+  /* Verification Status Badges */
+  .badge-supported {
+    @apply inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-outdated {
+    @apply inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-partially-supported {
+    @apply inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-conflicting {
+    @apply inline-flex items-center gap-1.5 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-unverified {
+    @apply inline-flex items-center gap-1.5 bg-slate-100 text-slate-600 border border-slate-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+
+  .badge-not-checked {
+    @apply inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded-full;
+  }
+}
+
+/* Crisp Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Print Styles for PDF Export */
+@media print {
+  header, aside, .no-print, nav, button:not(.print-include) {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  .card {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    margin-bottom: 1.5rem !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
