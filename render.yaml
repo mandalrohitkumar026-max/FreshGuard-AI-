@@ -1,0 +1,59 @@
+services:
+  # ── FreshGuard AI Production Backend API ────────────────────────────────────
+  - type: web
+    name: freshguard-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: .
+    buildCommand: npm install && npm run build --workspace=backend
+    startCommand: npm run start --workspace=backend
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        value: https://freshguard-ai.vercel.app
+      - key: BIFROST_BASE_URL
+        value: http://localhost:8080/v1
+      - key: BIFROST_VIRTUAL_KEY
+        sync: false
+      - key: BIFROST_PRIMARY_MODEL
+        value: openai/gpt-4o
+      - key: TAVILY_API_KEY
+        sync: false
+      - key: TAVILY_SEARCH_DEPTH
+        value: advanced
+      - key: TAVILY_MAX_RESULTS
+        value: 5
+
+  # ── FreshGuard AI Static Frontend ───────────────────────────────────────────
+  - type: static
+    name: freshguard-web
+    rootDir: .
+    buildCommand: npm install && npm run build --workspace=frontend
+    staticPublishPath: frontend/dist
+    pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://freshguard-api.onrender.com/api/v1
