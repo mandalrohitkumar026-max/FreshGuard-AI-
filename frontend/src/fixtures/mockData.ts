@@ -1,0 +1,261 @@
+// ─────────────────────────────────────────────────────────
+// DEV FIXTURES ONLY — Clearly labeled for frontend preview
+// These fixtures mirror real PS06 verification data contracts.
+// ─────────────────────────────────────────────────────────
+
+import {
+  DashboardStatistics,
+  VerificationReport,
+  VerificationSession,
+} from '../types/api.types';
+
+export const DEV_FIXTURE_STATS: DashboardStatistics = {
+  totalVerifications: 142,
+  claimsAnalyzed: 512,
+  outdatedClaims: 87,
+  supportedClaims: 384,
+  unverifiedClaims: 41,
+  averageFreshnessScore: 78.4,
+  activityOverTime: [
+    { date: 'Nov 06', count: 14, avgScore: 74 },
+    { date: 'Nov 07', count: 19, avgScore: 82 },
+    { date: 'Nov 08', count: 22, avgScore: 79 },
+    { date: 'Nov 09', count: 28, avgScore: 71 },
+    { date: 'Nov 10', count: 21, avgScore: 85 },
+    { date: 'Nov 11', count: 24, avgScore: 76 },
+    { date: 'Nov 12', count: 14, avgScore: 81 },
+  ],
+  statusDistribution: [
+    { name: 'Fresh (Confirmed)', value: 384, color: '#16a34a' },
+    { name: 'Stale (Outdated)', value: 87, color: '#d97706' },
+    { name: 'Unverified', value: 41, color: '#64748b' },
+  ],
+  freshnessDistribution: [
+    { range: '90-100', count: 54 },
+    { range: '80-89', count: 48 },
+    { range: '60-79', count: 26 },
+    { range: '40-59', count: 10 },
+    { range: '0-39', count: 4 },
+  ],
+};
+
+export const DEV_FIXTURE_SESSIONS: VerificationSession[] = [
+  {
+    id: 'vf-98124',
+    title: 'React 18 vs React 19 Release Analysis',
+    status: 'COMPLETE',
+    riskLevel: 'STALE',
+    aggregateFreshnessScore: 64,
+    totalClaims: 4,
+    staleClaims: 2,
+    processingTimeMs: 4200,
+    reportId: 'rep-react-19',
+    topic: 'Web Development',
+    sourceModel: 'gpt-4 (legacy cut)',
+    createdAt: '2026-11-12T09:20:00.000Z',
+  },
+  {
+    id: 'vf-98125',
+    title: 'Python 3.12 Support & Lifecycle Policies',
+    status: 'COMPLETE',
+    riskLevel: 'FRESH',
+    aggregateFreshnessScore: 94,
+    totalClaims: 3,
+    staleClaims: 0,
+    processingTimeMs: 3100,
+    reportId: 'rep-python-support',
+    topic: 'Programming',
+    sourceModel: 'claude-3-5-sonnet',
+    createdAt: '2026-11-12T08:14:00.000Z',
+  },
+  {
+    id: 'vf-98126',
+    title: 'OpenAI Executive Leadership & Governance',
+    status: 'COMPLETE',
+    riskLevel: 'OUTDATED',
+    aggregateFreshnessScore: 38,
+    totalClaims: 3,
+    staleClaims: 2,
+    processingTimeMs: 5100,
+    reportId: 'rep-openai-exec',
+    topic: 'Corporate / AI Industry',
+    sourceModel: 'chatgpt-2023-dump',
+    createdAt: '2026-11-11T16:45:00.000Z',
+  },
+  {
+    id: 'vf-98127',
+    title: 'European AI Act Enactment Timeline',
+    status: 'COMPLETE',
+    riskLevel: 'FRESH',
+    aggregateFreshnessScore: 91,
+    totalClaims: 5,
+    staleClaims: 0,
+    processingTimeMs: 6200,
+    reportId: 'rep-eu-ai-act',
+    topic: 'Legal / Regulation',
+    sourceModel: 'gpt-4o',
+    createdAt: '2026-11-11T11:30:00.000Z',
+  },
+  {
+    id: 'vf-98128',
+    title: 'Node.js LTS Version Schedule (v20 vs v22)',
+    status: 'COMPLETE',
+    riskLevel: 'STALE',
+    aggregateFreshnessScore: 68,
+    totalClaims: 3,
+    staleClaims: 1,
+    processingTimeMs: 3800,
+    reportId: 'rep-nodejs-lts',
+    topic: 'Runtime Engines',
+    sourceModel: 'mistral-large',
+    createdAt: '2026-11-10T14:15:00.000Z',
+  },
+];
+
+export const DEV_FIXTURE_SAMPLE_REPORT: VerificationReport = {
+  id: 'rep-react-19',
+  sessionId: 'vf-98124',
+  createdAt: '2026-11-12T09:20:00.000Z',
+  originalAnswer:
+    'React 18 was released in March 2022 and introduced concurrent rendering. The latest stable version of React is 18.2.0. Server Components remain an experimental architecture not recommended for general production use.',
+  suggestedAnswer:
+    'React 18 was released in March 2022 and introduced concurrent rendering. As of recent official releases, React 19 is now the active major release with React Server Components fully supported for production in modern frameworks [1].',
+  hasCorrectedAnswer: true,
+  correctionExplanation:
+    'Two claims contradicted current live documentation: React 19 is now released, and React Server Components are no longer strictly experimental.',
+  summary: {
+    aggregateFreshnessScore: 64,
+    riskLevel: 'STALE',
+    totalClaims: 3,
+    staleClaims: 2,
+    supportedClaims: 1,
+    unverifiedClaims: 0,
+    processingTimeMs: 4200,
+    modelUsed: 'Bifrost (gpt-4o gateway)',
+  },
+  claims: [
+    {
+      id: 'cl-1',
+      order: 1,
+      claimText: 'React 18 was released in March 2022 and introduced concurrent rendering.',
+      category: 'SOFTWARE_RELEASE',
+      timeSensitivity: 'STATIC',
+      verdict: 'CONFIRMS',
+      confidence: 0.98,
+      freshnessScore: 100,
+      explanation:
+        'Official React release notes confirm React 18.0 was officially released on March 29, 2022 featuring Concurrent React.',
+      evidence: [
+        {
+          url: 'https://react.dev/blog/2022/03/29/react-v18',
+          title: 'React v18.0 Announcement – React Dev',
+          domain: 'react.dev',
+          authorityTier: 'HIGH',
+          authorityScore: 0.98,
+          tavilyScore: 0.96,
+          ageInDays: null,
+          publishedDate: '2022-03-29',
+          retrievedAt: '2026-11-12T09:20:02Z',
+          snippet:
+            'React 18 is now available on npm today! In our last post, we shared step-by-step instructions on upgrading your app to React 18. Concurrent rendering is officially included.',
+          usedInAnalysis: true,
+        },
+      ],
+    },
+    {
+      id: 'cl-2',
+      order: 2,
+      claimText: 'The latest stable version of React is 18.2.0.',
+      category: 'SOFTWARE_RELEASE',
+      timeSensitivity: 'HIGHLY_DYNAMIC',
+      verdict: 'CONTRADICTS',
+      confidence: 0.94,
+      freshnessScore: 38,
+      explanation:
+        'Authoritative package and documentation releases verify React 19.x is now the active stable major line, superseding 18.2.0.',
+      searchQuery: 'React latest stable release version official documentation npm',
+      evidence: [
+        {
+          url: 'https://react.dev/blog/2024/12/05/react-19',
+          title: 'React 19 is now stable – React Dev',
+          domain: 'react.dev',
+          authorityTier: 'HIGH',
+          authorityScore: 0.97,
+          tavilyScore: 0.98,
+          ageInDays: 45,
+          publishedDate: '2024-12-05',
+          retrievedAt: '2026-11-12T09:20:03Z',
+          snippet:
+            'In our React 19 Beta post, we shared that React 19 adds support for Actions, Document Metadata, Asset Loading, and Web Components. Today, React 19 is officially stable.',
+          usedInAnalysis: true,
+        },
+        {
+          url: 'https://www.npmjs.com/package/react',
+          title: 'react on npm - Latest Release',
+          domain: 'npmjs.com',
+          authorityTier: 'HIGH',
+          authorityScore: 0.95,
+          tavilyScore: 0.92,
+          ageInDays: 30,
+          publishedDate: '2024-12-06',
+          retrievedAt: '2026-11-12T09:20:03Z',
+          snippet:
+            'react: The library for web and native user interfaces. Latest published version is 19.0.0 (or newer patch release).',
+          usedInAnalysis: true,
+        },
+      ],
+    },
+    {
+      id: 'cl-3',
+      order: 3,
+      claimText:
+        'Server Components remain an experimental architecture not recommended for general production use.',
+      category: 'SOFTWARE_RELEASE',
+      timeSensitivity: 'HIGHLY_DYNAMIC',
+      verdict: 'CONTRADICTS',
+      confidence: 0.91,
+      freshnessScore: 42,
+      explanation:
+        'React Server Components are officially supported in production frameworks such as Next.js App Router and adopted in React 19.',
+      searchQuery: 'React Server Components production status stable react 19',
+      evidence: [
+        {
+          url: 'https://react.dev/reference/rsc/server-components',
+          title: 'React Server Components – React Dev Documentation',
+          domain: 'react.dev',
+          authorityTier: 'HIGH',
+          authorityScore: 0.96,
+          tavilyScore: 0.94,
+          ageInDays: 60,
+          publishedDate: '2024-11-20',
+          retrievedAt: '2026-11-12T09:20:04Z',
+          snippet:
+            'React Server Components allow components to render on the server ahead of time. Server Components are stable and integrated into React 19 with framework support.',
+          usedInAnalysis: true,
+        },
+      ],
+    },
+  ],
+  topSources: [
+    {
+      url: 'https://react.dev/blog/2024/12/05/react-19',
+      title: 'React 19 Release Notes',
+      domain: 'react.dev',
+      authorityTier: 'HIGH',
+    },
+    {
+      url: 'https://www.npmjs.com/package/react',
+      title: 'React on npm registry',
+      domain: 'npmjs.com',
+      authorityTier: 'HIGH',
+    },
+    {
+      url: 'https://react.dev/reference/rsc/server-components',
+      title: 'React Server Components Reference',
+      domain: 'react.dev',
+      authorityTier: 'HIGH',
+    },
+  ],
+  isPublic: true,
+  publicSlug: 'react-19-freshness-audit',
+};
